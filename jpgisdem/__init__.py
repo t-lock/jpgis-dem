@@ -174,11 +174,14 @@ def _parse_bounds(root):
         raise click.ClickException("Unable to find Envelope bounds.")
 
     try:
-        bottom = float(gml_lower_corner.split(" ")[0])
-        left = float(gml_lower_corner.split(" ")[1])
-        top = float(gml_upper_corner.split(" ")[0])
-        right = float(gml_upper_corner.split(" ")[1])
-        bounds = rasterio.coords.BoundingBox(left, bottom, right, top)
+        # XML format is: latitude longitude
+        # BoundingBox expects: left(lon), bottom(lat), right(lon), top(lat)
+        lat_min = float(gml_lower_corner.split(" ")[0])
+        lon_min = float(gml_lower_corner.split(" ")[1])
+        lat_max = float(gml_upper_corner.split(" ")[0])
+        lon_max = float(gml_upper_corner.split(" ")[1])
+        
+        bounds = rasterio.coords.BoundingBox(lon_min, lat_min, lon_max, lat_max)
     except Exception as e:
         raise click.ClickException("Unable to parse Envelope bounds.")
 
