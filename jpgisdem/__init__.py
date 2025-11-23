@@ -106,6 +106,8 @@ def _parse_crs(root):
         epsg = 6668
     elif gml_srs == "fguuid:jgd2000.bl":
         epsg = 4612
+    elif gml_srs == "fguuid:jgd2024.bl":
+        epsg = 10168        
     else:
         raise click.ClickException(f"Unsupported srs: '{gml_srs}'.")
 
